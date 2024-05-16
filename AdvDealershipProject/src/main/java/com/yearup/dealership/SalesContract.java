@@ -20,12 +20,12 @@ public class SalesContract extends Contract {
         // Initialize price
         double totalPrice = 0;
         // Check if user chose the finance option
-        if (isFinanced) {
+        if (isFinanced) { // If they did calculate the total cost with the monthly payment
             totalPrice = (recordingFee+processingFee+getMonthlyPayment())*(salesTaxAmount/100);
-        } else {
+        } else { // If they didn't calculate the total cost with the full cost of the vehicle
             totalPrice = (getVehicleSold().getPrice()+recordingFee+processingFee)*(salesTaxAmount/100);
         }
-        
+
         return totalPrice;
     }
 
