@@ -26,6 +26,7 @@ public class UserInterface {
             System.out.println("8) Add a Vehicle");
             System.out.println("9) Remove a Vehicle");
             System.out.println("10) Purchase/Lease a Vehicle");
+            System.out.println("11) Admin");
             System.out.println("0) Exit");
 
             try { // Enforce input type
@@ -63,6 +64,9 @@ public class UserInterface {
                     case 10:
                         processPurchaseOrLeaseRequest();
                         break;
+                    case 11:
+                        processAdmin();
+                        break;
                     case 0:
                         scanner.close();
                         System.exit(0);
@@ -73,6 +77,18 @@ public class UserInterface {
                 System.out.println("Exiting the program\n");
                 scanner.nextLine(); // Prevent an infinite loop
             }
+        }
+    }
+
+    public void processAdmin(){
+        AdminUserInterface admin = new AdminUserInterface();
+        System.out.println("Enter password : ");
+        int password = scanner.nextInt();
+        if (!admin.checkPassword(password)){
+            System.out.println("Incorrect password");
+            display();
+        } else{
+            admin.adminDisplay();
         }
     }
 
