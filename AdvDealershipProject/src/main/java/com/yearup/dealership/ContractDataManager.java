@@ -59,27 +59,9 @@ public class ContractDataManager {
             String input;
             while((input = bfr.readLine()) != null) {
                 contracts.add(input);
-                /*String[] tokens = input.split("\\|");
-
-                // Parse the tokens of the contract string into the vehicle [4]-[11]
-                Vehicle vehicle = new Vehicle(Integer.parseInt(tokens[4]), Integer.parseInt(tokens[5]),tokens[6],
-                        tokens[7],tokens[8],tokens[9],Integer.parseInt(tokens[10]),Double.parseDouble(tokens[11]));
-
-
-                if (tokens[0].equalsIgnoreCase("sale")){ // If the contract is a SalesContract
-                    // Parse tokens of the SalesContract
-
-                    SalesContract salesContract = new SalesContract(tokens[1],tokens[2],tokens[3],vehicle,
-                            Double.parseDouble(tokens[12]), Double.parseDouble(tokens[13]),
-                            Double.parseDouble(tokens[14]),false);// Initialize isFinanced to false
-
-                }
-                 */
             }
             return contracts;
 
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
