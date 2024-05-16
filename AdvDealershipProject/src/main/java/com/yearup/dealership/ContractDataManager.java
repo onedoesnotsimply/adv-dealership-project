@@ -33,14 +33,14 @@ public class ContractDataManager {
                         ((SalesContract) contract).getProcessingFee(), contract.getTotalPrice(), wasFinanced);// Sales contract data
 
 
-                bfr.write("SALE"+inputString+salesInputString+contract.getMonthlyPayment());
+                bfr.write("SALE"+inputString+salesInputString+contract.getMonthlyPayment()+"\n");
 
             } else if (contract instanceof LeaseContract) { // A LeaseContract
                 String leaseInputString = String.format("|%.2f|%.2f|%.2f|%.2f",
                         ((LeaseContract) contract).getExpectedEndingVal(),((LeaseContract) contract).getLeaseFee(),
-                        contract.getMonthlyPayment(), contract.getTotalPrice());
+                        contract.getTotalPrice(),contract.getMonthlyPayment());
 
-                bfr.write("LEASE"+inputString+leaseInputString);
+                bfr.write("LEASE"+inputString+leaseInputString+"\n");
 
             }
             bfr.close();

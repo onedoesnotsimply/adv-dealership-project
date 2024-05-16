@@ -1,5 +1,6 @@
 package com.yearup.dealership;
 
+import java.time.LocalDate;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
@@ -24,6 +25,7 @@ public class UserInterface {
             System.out.println("7) Display All Vehicles");
             System.out.println("8) Add a Vehicle");
             System.out.println("9) Remove a Vehicle");
+            System.out.println("10) Purchase/Lease a Vehicle");
             System.out.println("0) Exit");
 
             try { // Enforce input type
@@ -58,15 +60,116 @@ public class UserInterface {
                     case 9:
                         processRemoveVehicleRequest();
                         break;
+                    case 10:
+                        processPurchaseOrLeaseRequest();
+                        break;
                     case 0:
+                        scanner.close();
                         System.exit(0);
                     default: // Enforce input range
                         System.out.println("Invalid input\n");
                 }
             } catch (InputMismatchException e) {
-                System.out.println("Invalid input\nPlease enter a number\n");
+                System.out.println("Exiting the program\n");
                 scanner.nextLine(); // Prevent an infinite loop
             }
+        }
+    }
+
+    public void processPurchaseOrLeaseRequest() {
+        // Prompt for whether this is a purchase or a lease
+        System.out.println("1) Purchase");
+        System.out.println("2) Lease");
+        int choice = scanner.nextInt(); // Get the choice first
+        scanner.nextLine();
+
+        // Prompt for general contract data before using the choice
+        System.out.print("Enter the current date : ");
+        String date=scanner.nextLine();
+        System.out.print("Enter your full name : ");
+        String name = scanner.nextLine();
+        System.out.print("Enter your email address : ");
+        String email = scanner.nextLine();
+        System.out.print("Enter the VIN of the vehicle : ");
+        int vin = scanner.nextInt();
+        scanner.nextLine();
+        Vehicle inputVehicle = null;
+
+        // Loop through the dealership inventory to find the correct vehicle
+        for (Vehicle vehicle : dealership.getAllVehicles()){
+            if (vehicle.getVin()==vin){
+                 inputVehicle=vehicle;
+            }
+        }
+
+        // Make sure that the vehicle exists
+        if (inputVehicle==null) {
+            // If it doesn't print an error message and send the user back to the homescreen
+            System.out.println("Invalid VIN\nVehicle does not exist");
+            display();
+        }
+
+        // You can't lease a vehicle if it's more than 3 years old
+        if (((LocalDate.now().getYear() - inputVehicle.getYear()) > 3) && (choice == 2)) {
+            System.out.println("Vehicle too old for lease");
+            display();
+        }
+
+        if (choice == 1){ // Choice was between 1) Purchase
+            // Prompt for SalesContract data
+            System.out.print("Enter the sales tax amount as a whole number : ");
+            double salesTax = scanner.nextDouble();
+            System.out.print("Enter the contract recording fee : ");
+            double recordingFee = scanner.nextDouble();
+            System.out.print("Enter the processing fee : ");
+            double processingFee = scanner.nextDouble();
+            scanner.nextLine();
+            System.out.print("Would you like to finance? (Y/N) : ");
+            String finance = scanner.nextLine();
+
+            // Create a SalesContract with a default finance input of false
+            SalesContract salesContract = new SalesContract(date,name,email,inputVehicle,salesTax,recordingFee,processingFee,false);
+
+            // Check the finance input
+            if (finance.equalsIgnoreCase("y")){ // If they did want to finance
+                salesContract.setFinanced(true); // Set the finance option to true
+            }
+
+            // Write the SalesContract to the csv
+            ContractDataManager.saveContract(salesContract);
+            System.out.println("Contract saved");
+
+            // Remove the vehicle from the inventory
+            dealership.removeVehicle(inputVehicle);
+            System.out.println("Vehicle removed from inventory");
+
+            // Save dealership changes
+            DealershipFileManager.saveDealership(dealership);
+
+        } else if (choice == 2) { // 2) Lease
+            // Prompt for Lease data
+            System.out.print("Enter the expected ending value percentage as a whole number: ");
+            double expectedEndingVal = scanner.nextDouble();
+            System.out.print("Enter the lease fee percentage as a whole number : ");
+            double leaseFee = scanner.nextDouble();
+
+            // Instantiate a LeaseContract
+            LeaseContract leaseContract = new LeaseContract(date,name,email,inputVehicle,expectedEndingVal,leaseFee);
+
+            // Write the LeaseContract to the csv
+            ContractDataManager.saveContract(leaseContract);
+            System.out.println("Contract saved");
+
+            // Remove the vehicle from the inventory and save the dealership changes
+            dealership.removeVehicle(inputVehicle);
+            System.out.println("Vehicle removed from inventory");
+            DealershipFileManager.saveDealership(dealership);
+
+
+        } else {
+            System.out.println("Invalid choice");
+            scanner.nextLine();
+            processPurchaseOrLeaseRequest();
         }
     }
 

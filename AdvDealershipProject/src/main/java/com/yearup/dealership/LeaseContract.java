@@ -13,7 +13,9 @@ public class LeaseContract extends Contract{
     // Abstract methods
     @Override
     public double getTotalPrice() {
-        return getMonthlyPayment()*(leaseFee/100);
+        // This is also probably wrong
+        double totalPrice = getMonthlyPayment()*36;
+        return totalPrice;
     }
 
     @Override

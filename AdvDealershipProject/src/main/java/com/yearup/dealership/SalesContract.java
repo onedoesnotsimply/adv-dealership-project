@@ -23,7 +23,8 @@ public class SalesContract extends Contract {
         if (isFinanced) { // If they did calculate the total cost with the monthly payment
             totalPrice = (recordingFee+processingFee+getMonthlyPayment())*(salesTaxAmount/100);
         } else { // If they didn't calculate the total cost with the full cost of the vehicle
-            totalPrice = (getVehicleSold().getPrice()+recordingFee+processingFee)*(salesTaxAmount/100);
+            totalPrice = (getVehicleSold().getPrice()+recordingFee+processingFee);
+            totalPrice += totalPrice*(salesTaxAmount/100);
         }
 
         return totalPrice;
