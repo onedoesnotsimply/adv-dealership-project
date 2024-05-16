@@ -9,9 +9,6 @@ public class Program {
         //ui.display();
 
 
-        /*
-        Testing
-
 
         Vehicle vehicle = new Vehicle(55555, 2015,"Ford","Explorer", "SUV","Red", 150000, 9000.0);
 
@@ -23,10 +20,12 @@ public class Program {
         //System.out.println(salesContract.getTotalPrice());
         //System.out.println(salesContract.getVehicleSold());
 
-        System.out.println("Lease");
+        //System.out.println("Lease");
         //System.out.println(leaseContract.getTotalPrice());
-        System.out.println(leaseContract.getMonthlyPayment());
+        //System.out.println(leaseContract.getMonthlyPayment());
         //System.out.println(leaseContract.getVehicleSold());
-         */
+
+        ContractDataManager.saveContract(salesContract);
+
     }
 }
