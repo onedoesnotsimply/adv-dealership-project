@@ -8,12 +8,10 @@ import java.util.Scanner;
 public class AdminUserInterface {
     private int password;
     static ArrayList<String> contracts;
-    ArrayList<String> searchResults;
 
     public AdminUserInterface() {
         this.password = 123;
         contracts = new ArrayList<>();
-        searchResults = new ArrayList<>();
     }
 
     public boolean checkPassword(int userInput){

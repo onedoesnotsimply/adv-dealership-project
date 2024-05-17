@@ -74,7 +74,7 @@ public class UserInterface {
                         System.out.println("Invalid input\n");
                 }
             } catch (InputMismatchException e) {
-                System.out.println("Exiting the program\n");
+                System.out.println("Invalid input\n");
                 scanner.nextLine(); // Prevent an infinite loop
             }
         }
@@ -136,7 +136,7 @@ public class UserInterface {
 
         if (choice == 1){ // Choice was between 1) Purchase
             // Prompt for SalesContract data
-            System.out.print("Enter the sales tax amount as a whole number : ");
+            System.out.print("Enter the sales tax percentage as a whole number : ");
             double salesTax = scanner.nextDouble();
             System.out.print("Enter the contract recording fee : ");
             double recordingFee = scanner.nextDouble();
