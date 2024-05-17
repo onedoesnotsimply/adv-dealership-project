@@ -27,12 +27,12 @@ public class ContractDataManager {
                 } else {
                     wasFinanced = "NO";
                 }
-                String salesInputString = String.format("|%.2f|%.2f|%.2f|%.2f|%s|",
+                String salesInputString = String.format("|%.2f|%.2f|%.2f|%.2f|%s|%.2f",
                         ((SalesContract) contract).getSalesTaxAmount(),((SalesContract) contract).getRecordingFee(), // Sales contract data
-                        ((SalesContract) contract).getProcessingFee(), contract.getTotalPrice(), wasFinanced);// Sales contract data
+                        ((SalesContract) contract).getProcessingFee(), contract.getTotalPrice(), wasFinanced, contract.getMonthlyPayment());// Sales contract data
 
 
-                bfw.write("SALE"+inputString+salesInputString+contract.getMonthlyPayment()+"\n");
+                bfw.write("SALE"+inputString+salesInputString+"\n");
 
             } else if (contract instanceof LeaseContract) { // A LeaseContract
                 String leaseInputString = String.format("|%.2f|%.2f|%.2f|%.2f",

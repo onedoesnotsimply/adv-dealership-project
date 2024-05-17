@@ -125,8 +125,11 @@ public class UserInterface {
             display();
         }
 
+        // Get the vehicles age for lease condition
+        int age = LocalDate.now().getYear()-inputVehicle.getYear();
+
         // You can't lease a vehicle if it's more than 3 years old
-        if (((LocalDate.now().getYear() - inputVehicle.getYear()) > 3) && (choice == 2)) {
+        if ((age > 3) && (choice == 2)) {
             System.out.println("Vehicle too old for lease");
             display();
         }
